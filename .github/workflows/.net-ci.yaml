@@ -1,45 +1,46 @@
-name:  build & test .net artifacts
+name: Build & Test .NET Artifacts
+
 on:
   pull_request:
     branches: [develop]
+
   push:
     branches: [master]
+
   workflow_dispatch:
     inputs:
-     dotnet_version:
-      type: string
-      default: "8.0.x"
-      
+      dotnet_version:
+        type: string
+        default: "8.0.x"
+        required: true
+
 jobs:
-    checkout-repo:
-      runs-on: ${{matrix.os}} 
-      strategy:
-        fail-fast: false
-        matrix:
-          os: [windows-latest, ubuntu-latest]
+  checkout-repo:
+    runs-on: ${{ matrix.os }}
 
-  
-      steps:
-        - name: checkout code
-          uses: actions/checkout@v5
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
 
-        - name: setup .net core
-          uses: actions/setup-dotnet@v5
-          with:
-            dotnet-version: ${{inputs.dotnet_version}}
-            cache: true
+    steps:
 
-        - name:  insall dependencies
-          run: dotnet restore
+      - name: Checkout code
+        uses: actions/checkout@v5
 
-        - name: build
-          run: dotnet build --configuration Release  --no-resore
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ inputs.dotnet_version }}
+          cache: true
 
-        - name: test
-          run: dontent test --configuration Release  --verbosity normal
+      - name: Install dependencies
+        run: dotnet restore
 
-        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 
-
-      
-  
+      - name: Test
+        run: dotnet test --configuration Release --verbosity normal
