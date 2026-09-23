@@ -37,10 +37,10 @@ jobs:
           cache: false
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./src/Presentations/WebAp/WebApi.csproj
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./src/Presentations/WebAp/WebApi.csproj --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --configuration Release --verbosity normal
+        run: dotnet test ./src/Presentations/WebAp/WebApi.csproj --configuration Release --verbosity normal
