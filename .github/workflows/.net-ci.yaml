@@ -48,7 +48,7 @@ jobs:
       - name: docker build
         uses: docker/build-push-action@v7
         with:
-          context: .
+          context: ./src
           file: ./src/Presentations/WebApi/Dockerfile
           tags: webapi:${{github.sha}}
           load: true
