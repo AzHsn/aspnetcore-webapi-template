@@ -6,24 +6,25 @@ on:
     branches: [master]
   workflow_dispatch:
     inputs:
-      name: dotnet_version
+     dotnet_version:
       type: string
+      default: "8.0.x"
       
-  jobs:
-    checkout repo:
+jobs:
+    checkout-repo:
       runs-on: ${{matrix.os}} 
       strategy:
         fail-fast: false
-      matrix:
-        os:   [windows-latest, ubuntu-latest]
+        matrix:
+          os: [windows-latest, ubuntu-latest]
 
   
       steps:
-        - name: checkout repo
-        - uses: action@checkout@v5
+        - name: checkout code
+          uses: actions/checkout@v5
 
         - name: setup .net core
-          uses: action@setup-dotnet@v5
+          uses: actions/setup-dotnet@v5
           with:
             dotnet-version: ${{env.dotnet_version}}
             cache: true
