@@ -1,0 +1,44 @@
+name:  build & test .net artifacts
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      name: dotnet_version
+      type: string
+      
+  jobs:
+    checkout repo:
+      runs-on: ${{matrix.os}} 
+      strategy:
+        fail-fast: false
+      matrix:
+        os:   [windows-latest, ubuntu-latest]
+
+  
+      steps:
+        - name: checkout repo
+        - uses: action@checkout@v5
+
+        - name: setup .net core
+          uses: action@setup-dotnet@v5
+          with:
+            dotnet-version: ${{env.dotnet_version}}
+            cache: true
+
+        - name:  insall dependencies
+          run: dotnet restore
+
+        - name: build
+          run: dotnet build --configuration Release  --no-resore
+
+        - name: test
+          run: dontent test --configuration Release  --verbosity normal
+
+        
+
+
+      
+  
