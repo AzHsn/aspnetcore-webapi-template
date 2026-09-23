@@ -22,16 +22,11 @@ jobs:
       steps:
         - name: checkout code
           uses: actions/checkout@v5
-          
-        - name: Install .NET SDK (global.json)
-          uses: actions/setup-dotnet@v5
-          with:
-            global-json-file: global.json
 
         - name: setup .net core
           uses: actions/setup-dotnet@v5
           with:
-            dotnet-version: ${{env.dotnet_version}}
+            dotnet-version: ${{inputs.dotnet_version}}
             cache: true
 
         - name:  insall dependencies
