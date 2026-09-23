@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          file: .src/Presentation/WebApi/Dockerfile
+          file: ./src/Presentation/WebApi/Dockerfile
           tags: webapi:${{github.sha}}
           load: true
       - name: scan image with trivy
