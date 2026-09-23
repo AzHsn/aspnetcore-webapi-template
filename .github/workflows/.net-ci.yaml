@@ -52,12 +52,12 @@ jobs:
           file: ./src/Presentations/WebApi/Dockerfile
           tags: webapi:${{github.sha}}
           load: true
-      - name: scan image with trivy
+      - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
-        with: 
-          image-ref: wepapi:${{github.sha}}
+        with:
+          image-ref: webapi:${{ github.sha }}
           format: table
-          severity: HIGH, CRITICAL
-          ignore-unfixed: ture
-          exit-code: 1 
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
 
